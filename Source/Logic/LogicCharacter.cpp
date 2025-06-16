@@ -164,6 +164,9 @@ void ALogicCharacter::LockOn(const FInputActionValue& Value)
 	if (LockOnComponent)
 	{
 		LockOnComponent->ToggleLockOn();
+		
+		// 카메라 전환 상태 표시
+		DisplayCameraDebugMessage();
 	}
 }
 
@@ -182,5 +185,27 @@ void ALogicCharacter::SwitchTarget(const FInputActionValue& Value)
 		{
 			// LockOnComponent->SwitchToPreviousTarget();
 		}
+	}
+}
+
+FString ALogicCharacter::GetCurrentCameraType() const
+{
+	if (CombatCamera && CombatCamera->IsActive())
+	{
+		return TEXT("전투 카메라");
+	}
+	else if (MoveCamera && MoveCamera->IsActive())
+	{
+		return TEXT("이동 카메라");
+	}
+	return TEXT("알 수 없음");
+}
+
+void ALogicCharacter::DisplayCameraDebugMessage()
+{
+	if (GEngine)
+	{
+		FString CameraType = GetCurrentCameraType();
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, FString::Printf(TEXT("현재 카메라: %s"), *CameraType));
 	}
 }

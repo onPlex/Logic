@@ -95,5 +95,17 @@ public:
 	FORCEINLINE class UCameraComponent* GetCombatCamera() const { return CombatCamera; }
 	/** Returns LockOnComponent subobject **/
 	FORCEINLINE class UCameraLockOnComponent* GetLockOnComponent() const { return LockOnComponent; }
+
+	/** 현재 활성화된 카메라 타입을 반환합니다 */
+	UFUNCTION(BlueprintCallable, Category = "Camera")
+	FString GetCurrentCameraType() const;
+
+	/** 카메라 전환 상태를 화면에 표시합니다 */
+	void DisplayCameraDebugMessage();
+
+private:
+	/** 현재 활성화된 카메라 타입 */
+	UPROPERTY()
+	FString CurrentCameraType;
 };
 
